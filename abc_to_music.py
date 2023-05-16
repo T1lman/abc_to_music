@@ -44,7 +44,9 @@ for count, value in enumerate(scale):
 
 
 
-
+def pretty_print_list(input_list):
+    for i in  input_list:
+        print(i)
 
 
 
@@ -64,6 +66,12 @@ def str_to_scale(text):
 print("Provide scale in scale.txt aswell as abc in abc.txt")
 
 text_input=input("Enter your Text you want translated to your Scale:\n")
-print(str_to_scale(text_input))
+if text_input=="!from(text.txt)!":
+    with open('text.txt') as f:
+        text = f.read()
+    pretty_print_list(str_to_scale(text))
+else:
+    pretty_print_list(str_to_scale(text_input))
+
 
 
