@@ -1,16 +1,21 @@
 from player import *
+from output_functions import *
 
-# read files contens
-with open('abc.txt') as f:
+
+# read file content
+with open('assets\\abc.txt') as f:
     abc_raw = f.readlines()[0]
 
-with open('scale.txt') as f:
+with open('assets\\scale.txt') as f:
     scale_raw = f.readlines()[0]
 
 
+# import scale into python list type
 scale = scale_raw.split()
+# import abc into python list type
 abc = abc_raw.split()
 
+# get length of list and abc
 scale_len = len(scale)
 abc_len = len(abc)
 
@@ -18,33 +23,33 @@ abc_len = len(abc)
 print(f"provided scale: {scale}")
 print(F"provided abc: {abc}")
 
-
+# calculate values for padding scale
 verhältniss = abc_len/scale_len
 verhältniss_floor = abc_len//scale_len
 nachkomma_stelle = verhältniss-verhältniss_floor
 
+# position until needs to append at
 stelle_in_liste = nachkomma_stelle*scale_len
-anzahl_append = verhältniss_floor-1
+# how often it needs to extend the list
+anzahl_extend = verhältniss_floor-1
 
 
-og_scale = scale
+# extend the scale
 i = 0
-while i < anzahl_append:
+while i < anzahl_extend:
     i += 1
     scale.extend(scale[0:scale_len-1])
 
 
+# append missing to get to abc length
 for count, value in enumerate(scale):
     while count <= stelle_in_liste+1:
         scale.append(value)
         break
 
 
-def pretty_print_list(input_list):
-    for i in input_list:
-        print(i)
-
-
+# matching logic
+# match padded scale to abc
 def str_to_scale(text):
     string_lower = text.lower()
 
@@ -57,6 +62,7 @@ def str_to_scale(text):
     return scale_list
 
 
+# ui logic option to read from file aswell
 print("Provide scale in scale.txt aswell as abc in abc.txt")
 
 text_input = input("Enter your Text you want translated to your Scale:\n")
@@ -64,10 +70,32 @@ if text_input == "!from(text.txt)!":
     with open('text.txt') as f:
         text = f.read()
     notes = str_to_scale(text)
-
 else:
     notes = str_to_scale(text_input)
 
 
-for i in notes:
-    play_note_with_interactive_output(i)
+print("please choose your Output Mode:")
+
+print("0: only printing out notes")
+print("1: saving notes in file note_output.txt")
+print("2: interactive printing + playback")
+print("3: saving audio in output.wav")
+print("4: saving audio in audio_output.wav + saving notes in output")
+print("5: saving audio + printing out notes")
+
+output_mode = input().strip()
+
+if output_mode == "0":
+    output_0(notes)
+elif output_mode == "1":
+    output_1(notes)
+elif output_mode == "2":
+    output_2(notes)
+elif output_mode == "3":
+    output_3(notes)
+elif output_mode == "4":
+    output_4(notes)
+elif output_mode == "5":
+    output_5(notes)
+else:
+    print("invalid outputmode!")
