@@ -5,4 +5,4 @@ Use the command !from(text.txt)! to provide larger texts.Put your your text into
 The Notes then get played!
 
 
-
+![Notes](notes.png)
